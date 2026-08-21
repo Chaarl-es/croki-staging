@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Croki</title>
+    <meta
+      name="description"
+      content="Croki. Commandez. Croquez. La commande à emporter, simplement."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0D0C" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="theme-color" media="(display-mode: standalone)" content="transparent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Croki" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("croki.theme.v1");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var dark =
+            stored === "dark" ||
+            ((stored === "system" || stored == null) && prefersDark);
+          var canvas = dark ? "#0B0D0C" : "#FFFFFF";
+          var scheme = dark ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", scheme);
+          document.documentElement.style.colorScheme = scheme;
+          document.documentElement.style.setProperty("--canvas", canvas);
+          document.documentElement.style.backgroundColor = canvas;
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+            if (meta.getAttribute("media") === "(display-mode: standalone)") return;
+            meta.setAttribute("content", canvas);
+          });
+        } catch (e) {}
+      })();
+    </script>
+    <style id="expo-reset">
+      :root {
+        --croki-safe-top: constant(safe-area-inset-top);
+        --croki-safe-top: env(safe-area-inset-top, 0px);
+        color-scheme: light dark;
+        --canvas: #FFFFFF;
+        --surface: #FFFFFF;
+        --surface-subtle: #F7F7F4;
+        --surface-elevated: #FFFFFF;
+        --surface-elevated-high: #F7F7F4;
+        --surface-brand: #F4EEDB;
+        --brand-soft: #F4EEDB;
+        --text: #111310;
+        --text-primary: #111310;
+        --text-secondary: #4E4C46;
+        --text-tertiary: #6C6961;
+        --text-disabled: rgba(0, 0, 0, 0.38);
+        --primary: #14925B;
+        --primary-action: #117A4D;
+        --on-primary: #F4EEDB;
+        --border: rgba(0, 0, 0, 0.12);
+        --separator: rgba(0, 0, 0, 0.12);
+        --focus: #14925B;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --canvas: #0B0D0C;
+          --surface: #121513;
+          --surface-subtle: #171B18;
+          --surface-elevated: #1D231F;
+          --surface-elevated-high: #1D231F;
+          --surface-brand: #F4EEDB;
+          --brand-soft: #F4EEDB;
+          --text: #F7F8F7;
+          --text-primary: #F7F8F7;
+          --text-secondary: #BEBAAB;
+          --text-tertiary: #928F83;
+          --text-disabled: rgba(255, 255, 255, 0.38);
+          --primary: #14925B;
+          --primary-action: #117A4D;
+          --on-primary: #F4EEDB;
+          --border: rgba(255, 255, 255, 0.12);
+          --separator: rgba(255, 255, 255, 0.12);
+          --focus: #14925B;
+        }
+      }
+      html[data-theme="light"] {
+        --canvas: #FFFFFF;
+        --text: #111310;
+        --primary: #14925B;
+        --primary-action: #117A4D;
+        --on-primary: #F4EEDB;
+      }
+      html[data-theme="dark"] {
+        --canvas: #0B0D0C;
+        --surface: #121513;
+        --surface-subtle: #171B18;
+        --surface-elevated: #1D231F;
+        --surface-elevated-high: #1D231F;
+        --text: #F7F8F7;
+        --text-primary: #F7F8F7;
+        --text-secondary: #BEBAAB;
+        --text-tertiary: #928F83;
+        --text-disabled: rgba(255, 255, 255, 0.38);
+        --primary: #14925B;
+        --primary-action: #117A4D;
+        --on-primary: #F4EEDB;
+        --border: rgba(255, 255, 255, 0.12);
+        --separator: rgba(255, 255, 255, 0.12);
+      }
+      html,
+      body,
+      #root {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        min-height: 100lvh;
+        margin: 0;
+        padding: 0;
+        background: var(--canvas);
+      }
+      html,
+      body,
+      button,
+      input,
+      textarea,
+      select {
+        font-family: system-ui, sans-serif;
+      }
+      body {
+        overflow: hidden;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+      @media (prefers-contrast: more) {
+        :root {
+          --croki-contrast: more;
+        }
+      }
+      @media (prefers-reduced-transparency: reduce) {
+        :root {
+          --croki-transparency: reduce;
+        }
+      }
+      @media (forced-colors: active) {
+        :root {
+          --croki-forced-colors: active;
+        }
+      }
+      @media print {
+        nav,
+        header button,
+        [data-print-hide] {
+          display: none !important;
+        }
+        body {
+          overflow: visible;
+        }
+      }
+      #root {
+        display: flex;
+        flex: 1;
+      }
+      html:before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--croki-safe-top);
+        background: var(--canvas);
+        z-index: 11;
+        pointer-events: none;
+      }
+      [data-croki-safe-top="true"] {
+        padding-top: var(--croki-safe-top);
+      }
+      [data-croki-sticky-safe-top="true"] {
+        top: var(--croki-safe-top);
+        background: var(--canvas);
+        isolation: isolate;
+      }
+    </style>
+    <script src="/pwa-capture.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener(
+          "error",
+          function (event) {
+            var el = event.target;
+            if (
+              !el ||
+              el.tagName !== "SCRIPT" ||
+              !el.src ||
+              el.src.indexOf("/_expo/static/js/") === -1
+            ) {
+              return;
+            }
+            if (sessionStorage.getItem("croki.sw.bust") === "1") {
+              return;
+            }
+            sessionStorage.setItem("croki.sw.bust", "1");
+            var reload = function () {
+              location.replace("/");
+            };
+            navigator.serviceWorker
+              .getRegistrations()
+              .then(function (regs) {
+                return Promise.all(
+                  regs.map(function (reg) {
+                    return reg.unregister();
+                  }),
+                );
+              })
+              .then(function () {
+                return caches.keys();
+              })
+              .then(function (keys) {
+                return Promise.all(
+                  keys.map(function (key) {
+                    return caches.delete(key);
+                  }),
+                );
+              })
+              .then(reload)
+              .catch(reload);
+          },
+          true,
+        );
+        window.addEventListener("load", () => {
+          fetch("/sw.js", { cache: "no-store" })
+            .then((response) => {
+              if (!response.ok) return;
+              return navigator.serviceWorker.register("/sw.js", {
+                updateViaCache: "none",
+              });
+            })
+            .catch(() => {});
+        });
+      }
+    </script>
+  <meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="/favicon.ico"/><link rel="preload" href="/_expo/static/css/maplibre-gl-9ee142d85ebe8fc90c36b0bed2634e4f.css" as="style">
+<link rel="stylesheet" href="/_expo/static/css/maplibre-gl-9ee142d85ebe8fc90c36b0bed2634e4f.css"></head>
+  <body>
+    <noscript>JavaScript est requis pour utiliser Croki.</noscript>
+    <div id="root"></div>
+  <script src="/_expo/static/js/web/__expo-metro-runtime-1f8f5d3ca6b7f58204d51e14506d73fb.js" defer></script><script src="/_expo/static/js/web/__common-78b4147eda027e362e4e5c1bc85a6324.js" defer></script><script src="/_expo/static/js/web/entry-34856665cdfde0354ed9cfc047891f3f.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Croki</title>
+    <script>
+      (function () {
+        function go() {
+          location.replace("/");
+        }
+        if (!("serviceWorker" in navigator)) {
+          go();
+          return;
+        }
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (regs) {
+            return Promise.all(
+              regs.map(function (reg) {
+                return reg.unregister();
+              }),
+            );
+          })
+          .then(function () {
+            return caches.keys();
+          })
+          .then(function (keys) {
+            return Promise.all(
+              keys.map(function (key) {
+                return caches.delete(key);
+              }),
+            );
+          })
+          .then(go)
+          .catch(go);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Mise à jour de Croki…</p>
+  </body>
+</html>
