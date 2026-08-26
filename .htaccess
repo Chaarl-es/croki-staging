@@ -1,0 +1,19 @@
+# Croki — Apache/OVH. Généré, ne pas éditer.
+DirectoryIndex index.html
+DirectorySlash Off
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^establishment/foodtruck-demo-croki$ - [G,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.+?)/?$ $1/index.html [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+<IfModule mod_alias.c>
+RedirectMatch 410 ^/establishment/foodtruck-demo-croki$
+</IfModule>
+</IfModule>
